@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Agreement</title>
+</head>
+<body>
+    <center><h1>{{doc_type}}</h1></center>
+    
+    <p>{{intro}}</p>
+
+    <ol>
+        {% for key, value in sections.items %}
+        <li><strong>{{ key }}</strong><br>{{ value }}</li>
+        {% endfor %}
+    </ol>
+
+    <footer>
+        <p>By signing below, the Employee acknowledges and agrees to the terms and conditions of this Employee Confidentiality and Non-Disclosure Agreement.</p>
+        <table>
+            <tr>
+                <th>Employee</th>
+                <th>Company</th>
+            </tr>
+            <tr>
+                <td>
+                    <p>Name: </p>
+                    <p>Address: </p>
+                    <p>Signature: </p>
+                </td>
+                <td>
+                    <p>Name: </p>
+                    <p>Address: </p>
+                    <p>Signature: </p>
+                </td>
+            </tr>
+        </table>
+    </footer>
+</body>
+</html>

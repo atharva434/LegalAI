@@ -1,0 +1,215 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NDA Form</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.0/html2pdf.bundle.min.js"></script>
+    <style>
+  /* styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #f7f7f7;
+}
+
+.form-container, .preview-container {
+    width: 48%;
+    padding: 20px;
+    background-color: #fff;
+}
+
+h1 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+textarea,
+input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button[type="submit"],
+#printButton {
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button[type="submit"]:hover,
+#printButton:hover {
+    background-color: #0056b3;
+}
+
+.preview-container {
+    position: relative;
+}
+
+/* Customize the appearance as needed */
+
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .preview-container, .preview-container * {
+                visibility: visible;
+            }
+            .preview-container {
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h1>Employee Confidentiality and Non-Disclosure Agreement</h1>
+            <form id="nda-form">
+                <div class="form-group">
+                    <label for="employeeName">Employee Name:</label>
+                    <input type="text" id="employeeName" name="employeeName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="employeeTitle">Employee Title:</label>
+                    <input type="text" id="employeeTitle" name="employeeTitle" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="companyName">Company Name:</label>
+                    <input type="text" id="companyName" name="companyName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="companyTitle">Company Title:</label>
+                    <input type="text" id="companyTitle" name="companyTitle" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="employeeAddress">Employee Address:</label>
+                    <textarea id="employeeAddress" name="employeeAddress" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="companyAddress">Company Address:</label>
+                    <textarea id="companyAddress" name="companyAddress" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="effectiveDate">Effective Date:</label>
+                    <input type="date" id="effectiveDate" name="effectiveDate" required>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit">Preview Document</button>
+                </div>
+                <button id="printButton" style="display: none;">Print</button>
+            </form>
+        </div>
+        <div class="preview-container">
+            <!-- NDA draft preview will be displayed here -->
+
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('nda-form');
+            const printButton = document.getElementById('printButton');
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                // Get form data
+                const formData = new FormData(form);
+                const employeeName = formData.get('employeeName');
+                const employeeTitle = formData.get('employeeTitle');
+                const companyName = formData.get('companyName');
+                const companyTitle = formData.get('companyTitle');
+                const employeeAddress = formData.get('employeeAddress');
+                const companyAddress = formData.get('companyAddress');
+                const effectiveDate = formData.get('effectiveDate');
+
+                // Create a div to contain the draft content
+                const draftContainer = document.createElement('div');
+                draftContainer.innerHTML = `
+                    <h2>Actual Contract</h2>
+                    <h3>Employee Confidentiality and Non-Disclosure Agreement</h3>
+
+                    <p>This Employee Confidentiality and Non-Disclosure Agreement (the "Agreement") is entered into between ${companyName}, a ${companyTitle} (hereinafter referred to as the "Company"), and ${employeeName} ${employeeTitle} (hereinafter referred to as the "Employee"), effective as of ${effectiveDate}.</p>
+
+                    <h4>1. Keeping Secrets</h4>
+                    <p>The Employee promises not to tell anyone or use any secrets they learn about the Company while working here unless the law says they must or it's part of their job. If they must share Company secrets because of the law, they'll tell the Company right away and help keep those secrets safe.</p>
+
+                    <h4>2. What We Create Belongs to the Company</h4>
+                    <p>If the Employee comes up with any ideas or inventions while working for the Company that have to do with the Company's business, those ideas and inventions belong to the Company. The Employee won't get extra money for them. The Company might give the Employee credit for their ideas if they show up in the Company's work.</p>
+
+                    <!-- Add more content here -->
+
+                    <h4>9. Laws and Courts</h4>
+                    <p>This agreement follows the laws of the place where the Company is based. If there's a legal problem, the Employee agrees that the courts in that place can handle it. The Company can also ask a court in another place to help if needed.</p>
+
+                    <p>By signing below, the Employee says they understand and agree to follow these rules:</p>
+
+                    <p>Company: ${companyName}</p>
+                    <p>By: _______________________________    Date: ______________</p>
+                    <p>[Authorized Signatory]</p>
+
+                    <p>Employee: ${employeeName}</p>
+                    <p>By: _______________________________    Date: ______________</p>
+                    <p>[Employee Signature]</p>
+                `;
+
+                // Display the draft content in the preview container
+                const previewContainer = document.querySelector('.preview-container');
+                previewContainer.innerHTML = draftContainer.innerHTML;
+
+                // Show the print button
+                printButton.style.display = 'block';
+            });
+
+            printButton.addEventListener('click', function () {
+                // Apply print stylesheet and open the browser's print dialog
+                const styleSheet = document.createElement('style');
+                styleSheet.type = 'text/css';
+                styleSheet.innerText = '@media print { body * { visibility: hidden; } .preview-container, .preview-container * { visibility: visible; } .preview-container { position: absolute; left: 0; top: 0; } }';
+                document.head.appendChild(styleSheet);
+                window.print();
+            });
+        });
+    </script>
+</body>
+</html>

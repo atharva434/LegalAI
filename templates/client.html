@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <title>client</title>
+
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- Add jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Add Bootstrap JavaScript (including Bootstrap's JavaScript dependencies) -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<style>
+    .section {
+        position: relative;
+        height: 100vh;
+    }
+
+    .section .section-center {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+    }
+
+    #booking {
+        font-family: 'Montserrat', sans-serif;
+        background-image: url('../static/appointment.png'); /* Replace with your image URL */
+        background-size: cover;
+        background-position: center;
+    }
+
+    #booking::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+
+    }
+
+
+
+
+.booking-form {
+	background-color: #fff;
+	padding: 50px 20px;
+	-webkit-box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.3);
+	box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.3);
+	border-radius: 4px;
+}
+
+.booking-form .form-group {
+	position: relative;
+	margin-bottom: 30px;
+}
+
+.booking-form .form-control {
+	background-color: #ebecee;
+	border-radius: 4px;
+	border: none;
+	height: 40px;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	color: #3e485c;
+	font-size: 14px;
+}
+
+.booking-form .form-control::-webkit-input-placeholder {
+	color: rgba(62, 72, 92, 0.3);
+}
+
+.booking-form .form-control:-ms-input-placeholder {
+	color: rgba(62, 72, 92, 0.3);
+}
+
+.booking-form .form-control::placeholder {
+	color: rgba(62, 72, 92, 0.3);
+}
+
+.booking-form input[type="date"].form-control:invalid {
+	color: rgba(62, 72, 92, 0.3);
+}
+
+.booking-form select.form-control {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+}
+
+.booking-form select.form-control+.select-arrow {
+	position: absolute;
+	right: 0px;
+	bottom: 4px;
+	width: 32px;
+	line-height: 32px;
+	height: 32px;
+	text-align: center;
+	pointer-events: none;
+	color: rgba(62, 72, 92, 0.3);
+	font-size: 14px;
+}
+
+.booking-form select.form-control+.select-arrow:after {
+	content: '\279C';
+	display: block;
+    padding-top: 20px;
+    padding-right: 20px;
+	-webkit-transform: rotate(90deg);
+	transform: rotate(90deg);
+}
+
+.booking-form .form-label {
+	display: inline-block;
+	color: #3e485c;
+	font-weight: 700;
+	margin-bottom: 6px;
+	margin-left: 7px;
+}
+.form-btn{
+    display: flex;
+    justify-content: center; /* Horizontal centering */
+    align-items: center;
+}
+
+.booking-form .submit-btn {
+    background: linear-gradient(to bottom right, #e710ea, #2b68e0);
+    border: 2px solid #5356e3;
+    font-weight: 900;
+    height: 40px;
+    padding: 5px 20px;
+    border-radius: 10px;
+    color: white; /* Set text color to transparent */
+    cursor: pointer;
+    position: relative;
+}
+
+.booking-form .submit-btn:hover,
+.booking-form .submit-btn:focus {
+	opacity: 0.9;
+}
+
+.booking-cta {
+	margin-top: 80px;
+	margin-bottom: 30px;
+}
+
+.booking-cta h1 {
+	font-size: 52px;
+	text-transform: uppercase;
+	color: #fff;
+	font-weight: 700;
+}
+
+.booking-cta p {
+	font-size: 16px;
+	color: rgba(255, 255, 255, 0.8);
+}
+
+
+
+    /* Rest of your CSS styles */
+</style>
+<body>
+<div id="booking" class="section">
+    <div class="section-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7 col-md-push-5"></div>
+                <div class="col-md-4 col-md-pull-7">
+                    <div class="booking-form">
+                        <form method="post">
+                            {% csrf_token %}
+                            <!-- Your existing form fields -->
+                            <div class="form-group">
+                                <span class="form-label">Query :</span>
+                                <!-- <input class="form-control" type="text" name="query" placeholder="Enter your query"> -->
+                                <textarea class="form-control" name="query" placeholder="Enter your query"></textarea>
+
+                            </div>
+                            <div class="form-group">
+                                <span class="form-label">Date :</span>
+                                <input class="form-control" type="date" id="date" name="date">
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <span class="form-label">Starting Time :</span>
+                                        <input class="form-control" type="time" name="start_time" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <span class="form-label">Duration(in hrs) :</span>
+                                        <input class="form-control" type="number" name="duration" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group" style="padding-right: 15px; padding-left: 15px">
+                                    <span class="form-label">Lawyer Type</span>
+                                    <select class="form-control" name="lawyer_type">
+                                        <option selected>Select a Lawyer Type</option>
+                                        {% for i in lawyersType %}
+                                        <option value="{{i}}" >{{i}}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <div class="form-group" style="padding-right: 15px; padding-left: 15px">
+                                        <span class="select-arrow"></span>
+                                    </div>
+                                    
+                                    <div id="lawyer-names" style="display: none;"></div>
+                                    
+                                    <span class="select-arrow"></span>
+                                </div>
+                            </div>
+                            <div class="form-btn">
+                                <!-- Button to open the modal -->
+                            <button type="submit" class="submit-btn">Check availability</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="availabilityModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="border: 2px solid #5356e3; border-radius: 20px;">
+            <div class="modal-header" style="background-color: #5356e3; color: #fff; border-radius: 18px 18px 0 0;">
+                <h4 class="modal-title" id="myModalLabel" style="font-weight: bold; font-size: 24px;">Select a Lawyer</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: #fff; font-size: 30px; opacity: 0.8;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="padding: 20px;">
+                <!-- List of names with radio buttons -->
+                <div class="form-group">
+                    <div class="radio" style="margin-bottom: 15px;">
+                        <label style="display: flex; align-items: center; padding: 15px;  cursor: pointer; transition: background-color 0.3s;">
+                            <input type="radio" name="selectedName" value="Name 1" style="margin-right: 15px;">
+                            <span style="font-size: 18px; color: #333; flex-grow: 1;">Name 1</span>
+                            <span style="font-size: 16px; color: #999;">Lawyer type 1</span>
+                        </label>
+                    </div>
+                    <div class="radio" style="margin-bottom: 15px;">
+                        <label style="display: flex; align-items: center; padding: 15px;  cursor: pointer; transition: background-color 0.3s;">
+                            <input type="radio" name="selectedName" value="Name 2" style="margin-right: 15px;">
+                            <span style="font-size: 18px; color: #333; flex-grow: 1;">Name 2</span>
+                            <span style="font-size: 16px; color: #999;">Lawyer type 1</span>
+                        </label>
+                    </div>
+                    <div class="radio" style="margin-bottom: 15px;">
+                        <label style="display: flex; align-items: center; padding: 15px; cursor: pointer; transition: background-color 0.3s;">
+                            <input type="radio" name="selectedName" value="Name 3" style="margin-right: 15px;">
+                            <span style="font-size: 18px; color: #333; flex-grow: 1;" data-toggle="tooltip">Name 3</span>
+                            <span style="font-size: 16px; color: #999;">Lawyer type 1</span>
+                        </label>
+                    </div>
+                    <!-- Add more names with radio buttons as needed -->
+                </div>
+            </div>
+            <div class="modal-footer" style="border-radius: 0 0 18px 18px; background-color: #f0f0f0;">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" style="background-color: #dcdcdc; border: none; color: #333; font-weight: bold; transition: background-color 0.3s;">Close</button>
+                <button type="button" class="btn btn-primary" id="submitName" style="background-color: #5356e3; border-color: #5356e3; font-weight: bold; transition: background-color 0.3s;">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<script>
+    var dateInput = document.getElementById('date');
+    var currentDate = new Date();
+    var formattedDate = currentDate.toISOString().split('T')[0];
+    dateInput.setAttribute('min', formattedDate);
+  </script>
+</body>
+</body>
+</html>

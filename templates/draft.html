@@ -1,0 +1,217 @@
+<!-- Main HTML document -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NDA Form</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.0/html2pdf.bundle.min.js"></script>
+    <style>
+
+        /* styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #f7f7f7;
+}
+
+.form-container, .preview-container {
+    width: 48%;
+    padding: 20px;
+    background-color: #fff;
+}
+
+h1 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+textarea,
+input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button[type="submit"],
+#printButton {
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button[type="submit"]:hover,
+#printButton:hover {
+    background-color: #0056b3;
+}
+
+.preview-container {
+    position: relative;
+}
+@media print {
+    body * {
+        visibility: visible;
+    }
+
+    .container {
+        width: 100%; /* Set the width to 100% for printing */
+        margin: 0;
+        padding: 0;
+    }
+
+    .form-container, .preview-container {
+        width: 100%; /* Set the width to 100% for printing */
+        margin: 0;
+        padding: 0;
+    }
+
+    .form-container {
+        float: left;
+    }
+
+    .preview-container {
+        float: left;
+    }
+
+    /* Adjust the width of elements for printing */
+    .form-group {
+        width: 100%;
+    }
+
+    input[type="text"],
+    textarea,
+    input[type="date"] {
+        width: 100%;
+    }
+
+    /* Customize other print-specific styles as needed */
+}
+
+
+
+
+
+
+
+/* Customize the appearance as needed */
+
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .form-container, .preview-container {
+            width: 48%;
+        }
+        /* Your other CSS styles here */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="container">
+        <div class="form-container">
+            <h1>Employee Confidentiality and Non-Disclosure Agreement</h1>
+            <form id="nda-form" >
+                <div class="form-group">
+                    <label for="employeeName">Employee Name:</label>
+                    <input type="text" id="employeeName" name="employeeName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="employeeTitle">Employee Title:</label>
+                    <input type="text" id="employeeTitle" name="employeeTitle" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="companyName">Company Name:</label>
+                    <input type="text" id="companyName" name="companyName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="companyTitle">Company Title:</label>
+                    <input type="text" id="companyTitle" name="companyTitle" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="employeeAddress">Employee Address:</label>
+                    <textarea id="employeeAddress" name="employeeAddress" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="companyAddress">Company Address:</label>
+                    <textarea id="companyAddress" name="companyAddress" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="effectiveDate">Effective Date:</label>
+                    <input type="date" id="effectiveDate" name="effectiveDate" required>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit">Preview Document</button>
+                </div>
+            </form>
+        </div>
+        <div class="preview-container">
+            <!-- Preview content will be loaded here -->
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('nda-form');
+            const previewButton = document.getElementById('previewButton');
+            const previewContainer = document.querySelector('.preview-container');
+
+            // Load the preview content from preview.html
+            function loadPreview() {
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', 'preview.html', true);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        previewContainer.innerHTML = xhr.responseText;
+                    }
+                };
+                xhr.send();
+            }
+
+            previewButton.addEventListener('click', function () {
+                // Get form data and generate the preview
+                // Replace this with your logic to generate the preview content
+                const formData = new FormData(form);
+                // Generate the preview content here based on form data
+
+                // Load the preview
+                loadPreview();
+            });
+        });
+    </script>
+</body>
+</html>

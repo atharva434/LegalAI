@@ -1,0 +1,521 @@
+<!-- Main HTML document -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NDA Form</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.0/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/styles/tailwind.css">
+<link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
+    <style>
+
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1300px;
+            max-height:700px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #f7f7f7;
+        }
+
+        .form-container {
+            width: 44%;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+            overflow-y: scroll;
+        }
+        .collapsible {
+            background-color: #777;
+            color: white;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 15px;
+        }
+          
+        .active, .collapsible:hover {
+        background-color: #555;
+        }
+        
+        .content {
+        padding: 0 18px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.2s ease-out;
+        background-color: #f1f1f1;
+        }
+
+        .preview-container {
+            width: 55%;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+            overflow-y: scroll;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+            /* font-weight: bold; */
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        textarea,
+        input[type="date"] {
+            width: 90%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button[type="submit"],
+        #printButton {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button[type="submit"]:hover,
+        #printButton:hover {
+            background-color: #0056b3;
+        }
+
+        button[type="submit"],
+        #addprintButton {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button[type="submit"]:hover,
+        #addprintButton:hover {
+            background-color: #0056b3;
+        }
+
+
+        button[type="submit"],
+        #updateprintButton {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button[type="submit"]:hover,
+        #updateprintButton:hover {
+            background-color: #0056b3;
+        }
+        .preview-container .arrow {
+            position: absolute;
+            top: 50%;
+            left: 70%;
+            transform: translate(-50%, -50%);
+            transform: rotate(90deg);
+            cursor: pointer;
+        }
+
+        .preview-container .arrow span {
+            display: block;
+            width: 1.5vw;
+            height: 1.5vw;
+            border-bottom: 5px solid black;
+            border-right: 5px solid black;
+            transform: rotate(45deg);
+            margin: -10px;
+            animation: animate 2s infinite;
+        }
+
+        .preview-container .arrow span:nth-child(2) {
+            animation-delay: -0.2s;
+        }
+
+        .preview-container .arrow span:nth-child(3) {
+            animation-delay: -0.4s;
+        }
+
+
+        @keyframes animate {
+            0% {
+                opacity: 0;
+                transform: rotate(45deg) translate(-20px, -20px);
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: rotate(45deg) translate(20px, 20px);
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                margin: 0;
+                padding: 0;
+                font-size: 12pt;
+            }
+
+            .container {
+                display: block;
+                width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
+            .form-container,
+            .preview-container {
+                width: 100%;
+                padding: 0;
+                box-shadow: none;
+            }
+
+            .preview-container {
+                margin-top: 20px;
+            }
+
+            .form-container {
+                display: none;
+            }
+
+            button[type="submit"],
+            #printButton {
+                display: none;
+            }
+            button[type="submit"],
+            #addprintButton {
+                display: none;
+            }
+            button[type="submit"],
+            #updateprintButton {
+                display: none;
+            }
+        }
+        @media print {
+            /* Hide footers */
+            @page {
+                margin-bottom: 0;
+            }
+            body {
+                margin-bottom: 0 !important;
+            }
+            h1{
+                display: none;
+            }
+        }
+        .dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Style for the button */
+.custom-button {
+    background: linear-gradient(to bottom right, #e710ea, #2b68e0);
+    border: 2px solid #5356e3;
+    font-weight: bold;
+    padding: 5px 20px;
+    border-radius: 50px;
+    color: transparent; /* Set text color to transparent */
+    -webkit-background-clip: text; /* Use background as text fill */
+    cursor: pointer;
+    position: relative;
+}
+
+.gradient {
+    background: linear-gradient(to bottom right, #e710ea, #2b68e0);
+    font-weight: bold;
+    font-size: 30px;
+    color: transparent; /* Set text color to transparent */
+    -webkit-background-clip: text; /* Use background as text fill */
+    transition: background 0.3s; /* Smooth gradient transition on hover */
+}
+    </style>
+</head>
+<body>
+    <header class=" relative shadow-lg px-3 py-2">
+        <nav class="flex justify-between">
+          <div class="w-[130px] md:w-[200px] flex items-center">
+            <a href="{% url "home" %} "><h2 class="gradient">GovtLegalAssistant</h2></a>
+      
+          </div>
+          <div class="flex items-center gap-3" style="padding-right: 80px">
+            <div class="navLinks duration-500 absolute md:static md:w-auto w-full md:h-auto h-[85vh] bg-white flex md:items-center gap-[1.5vw] top-[100%] left-[100%] px-5 md:py-0 py-5 ">
+              <ul class="flex md:flex-row flex-col md:items-center md:gap-[2vw] gap-8">
+                {%if request.user.is_authenticated%}      
+              </ul>
+            </div>
+            
+            <a href="/logout"><button class="custom-button">Log Out</button></a>
+            {% else %}
+              <div class="dropdown-overlay">
+         <div class="dropdown">
+          <button class="custom-button">Login</button>
+          <div class="dropdown-content">
+              <a href="/user_login">As a Client</a>
+              <a href="/user_login">As a Lawyer</a>
+      
+          </div>
+          
+          </div>
+                  </div>
+              <div class="dropdown-overlay">
+                 <div class="dropdown">
+          <button class="custom-button">Sign up</button>
+          <div class="dropdown-content">
+              <a href="/client_registration">As a Client</a>
+              <a href="/lawyer_registration">As a Lawyer</a>
+      
+          </div>
+          </div>
+          {% endif %}
+              </div>
+      </div>
+        </nav>
+      </header>
+      <br>
+<div class="container">
+    <div class="form-container">
+
+        <button class="collapsible">Personal Details</button>
+        <div class="content">        
+            <!-- <form id="nda-form" method="post" action="/nda" >
+                <h1>Employee Confidentiality and Non-Disclosure Agreement</h1>
+                <div class="form-group">
+                    <label for="emp_name">Employee Name:</label>
+                    <input style="width: 500px" type="text" id="emp_name" name="emp_name" required>
+                </div>
+    
+                <div class="form-group">
+                    <label for="emp_title">Employee Title:</label>
+                    <input style="width: 500px" type="text" id="emp_title" name="emp_title" required>
+                </div>
+    
+                <div class="form-group">
+                    <label for="company_name">Company Name:</label>
+                    <input style="width: 500px" type="text" id="company_name" name="company_name" required>
+                </div>
+    
+                <div class="form-group">
+                    <label for="company_title">Company Title:</label>
+                    <input style="width: 500px" type="text" id="company_title" name="company_title" required>
+                </div>
+    
+                <div class="form-group">
+                    <label for="emp_address">Employee Address:</label>
+                    <textarea style="width: 500px" id="emp_address" name="emp_address" required></textarea>
+                </div>
+    
+                <div class="form-group">
+                    <label for="company_address">Company Address:</label>
+                    <textarea style="width: 500px" id="company_address" name="company_address" required></textarea>
+                </div>
+    
+                <div class="form-group">
+                    <label for="Date">Effective Date:</label>
+                    <input style="width: 500px" type="date" id="Date" name="Date" required>
+                </div>
+    
+                <div class="form-groups">
+                    <input type="submit" value="Submit">
+                </div>
+
+                <div class="hidden" style="padding-top: 20px">
+                    <button id="printButton" style="display: none;">Print</button>
+                </div>
+            </form> -->
+            <form action="/nda" method="post">
+                {% csrf_token %}
+                <br>
+                <label for="emp_name">Name of Employee:</label>
+                <input type="text" id="emp_name" name="emp_name" required><br><br>
+        
+                <label for="emp_title">Title of Employee:</label>
+                <input type="text" id="emp_title" name="emp_title" required><br><br>
+        
+                <label for="company_name">Company Name:</label>
+                <input type="text" id="company_name" name="company_name" required><br><br>
+        
+                <label for="company_title">Company Title:</label>
+                <input type="text" id="company_title" name="company_title" required><br><br>
+        
+                <label for="emp_address">Employee Address:</label>
+                <input type="text" id="emp_address" name="emp_address" required><br><br>
+        
+                <label for="company_address">Company Address:</label>
+                <input type="text" id="company_address" name="company_address" required><br><br>
+        
+                <label for="Date">Date:</label>
+                <input type="date" id="Date" name="Date" required><br><br>
+        
+                <input id="printButton" type="submit" value="Submit" id="4">
+            </form>
+            <br>
+        </div>
+        
+
+        <button class="collapsible">Add Details</button>
+        <div class="content">
+            <form id="nda-form-add" method="post" action="/edit_document/add">
+                {% csrf_token %}
+                <br>
+                <label for="section_name">Name:</label>
+                <input type="text" id="name" name="section_name" required><br><br>
+                
+                <label for="points">Description:</label><br>
+                <input class="form-control" type="text" name="points" placeholder="Enter your points"><br><br>
+                
+                <input id="printButton" type="submit" value="Submit" id="1">
+
+            </form>
+            <br>
+        </div>
+        <button class="collapsible">Update Details</button>
+        <div class="content">        
+            <form id="nda-form-update" action="/edit_document/amend" method="post">
+                {% csrf_token %}
+                <br>
+                <label for="section_name">Name:</label>
+                <select class="form-control" name="section_name">
+                    <option selected>Select a Section</option>
+                    {% for i in options %}
+                    <option value="{{i}}" >{{i}}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                <label for="points">Description:</label><br>
+                <input class="form-control" type="text" name="points" placeholder="Enter your points"><br><br>
+                
+                <input id="printButton" type="submit" value="Submit" id="2">
+                <br>
+                <br>
+            </form>
+        </div>
+        <button class="collapsible">Delete Details</button>
+        <div class="content">        
+            <form id="nda-form-delete" action="/edit_document/delete" method="post">
+                {% csrf_token %}
+                <br>
+                <label for="section_name">Name:</label>
+                <select class="form-control" name="section_name">
+                    <option selected>Select a Section</option>
+                    {% for i in options %}
+                    <option value="{{i}}" >{{i}}</option>
+                    {% endfor %}
+                </select>
+                
+                <input id="printButton" type="submit" value="Submit" id="3">
+
+                <div class="hidden" style="padding-top: 20px">
+                    <button id="printButton" style="display: none;">Print</button>
+                </div>
+                <br>
+
+            </form>
+        </div>
+        <br>
+        <button id="printButton" onclick="printDiv('previewContent')">Print</button>
+        
+    </div>
+    <div class="preview-container" id="previewContent">
+        <!-- <div class="arrow">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div> -->
+        <!-- <h2>Actual Contract</h2> -->
+        <center><h2><strong>{{doc_type}}</strong></h2></center>
+
+        <p>{{intro}}</p>
+
+        <ol>
+            {% for key, value in sections.items %}
+            <li>{{ forloop.counter }}. <strong>{{ key }}</strong><br>{{ value }}</li>
+            {% endfor %}
+        </ol>
+        <br>
+        <p>By signing below, the Employee says they understand and agree to follow these rules:</p>
+        <br>
+        <p><strong>Company: {{company_name}}</strong></p>
+        <br>
+        <p>[Employer Signature]&nbsp;&nbsp; <strong>Date: ______________</strong></p>
+        <br>
+        <p><strong>Employee: {{emp_name}}</strong></p>
+        <br>
+        <p>[Employee Signature]&nbsp;&nbsp; <strong>Date: ______________</strong></p>
+        <p></p>
+    </div>
+</div>
+<!-- JavaScript code -->
+
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+    
+    for (i = 0; i < coll.length; i++) {
+      coll[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.maxHeight){
+          content.style.maxHeight = null;
+        } else {
+          content.style.maxHeight = content.scrollHeight + "px";
+        } 
+    });
+}
+</script>
+<script>
+    function printDiv(divName) {
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
+    }
+</script>
+<script>
+    var dateInput = document.getElementById('Date');
+    var currentDate = new Date();
+    var formattedDate = currentDate.toISOString().split('T')[0];
+    dateInput.setAttribute('min', formattedDate);
+  </script>
+</body>
+</html>

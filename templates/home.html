@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+        <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/styles/tailwind.css">
+<link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
+    </head>
+    <body>
+<style>
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Style for the button */
+.custom-button {
+    background: linear-gradient(to bottom right, #e710ea, #2b68e0);
+    border: 2px solid #5356e3;
+    font-weight: bold;
+    padding: 5px 20px;
+    border-radius: 50px;
+    color: transparent; /* Set text color to transparent */
+    -webkit-background-clip: text; /* Use background as text fill */
+    cursor: pointer;
+    position: relative;
+}
+/* Style the dropdown overlay */
+.dropdown-overlay {
+  position: relative;
+  z-index: 1; /* Place the dropdown above the slideshow */
+}
+
+/* Style for the dropdown content */
+.dropdown-content {
+    opacity: 0;
+    transform: translateY(-10px);
+    visibility: hidden;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 160px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-in-out;
+}
+
+/* Style for dropdown links */
+.dropdown-content a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #333;
+    transition: background-color 0.3s ease-in-out;
+}
+
+/* Change color of links on hover */
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+/* Show the dropdown content on button hover */
+.dropdown:hover .dropdown-content {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+}
+
+/* Change button styles on hover */
+.dropdown:hover .custom-button {
+    background: linear-gradient(to bottom right, #e710ea, #2b68e0);
+    border: 2px solid #5356e3;
+    font-weight: bold;
+    padding: 5px 20px;
+    border-radius: 50px;
+    color: white; /* Set text color to white on hover */
+}
+.gradient {
+    background: linear-gradient(to bottom right, #e710ea, #2b68e0);
+    font-weight: bold;
+    font-size: 30px;
+    color: transparent; /* Set text color to transparent */
+    -webkit-background-clip: text; /* Use background as text fill */
+    transition: background 0.3s; /* Smooth gradient transition on hover */
+}
+
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 1400px;
+  height: 400px;
+  position: relative;
+  margin: auto;
+}
+/* Hide the images by default */
+.mySlides {
+  display: none;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+/* Caption text */
+.text {
+  color: #f2f2f2;
+  font-size: 50px;font-weight: bold;
+  padding: 8px 12px;
+  position: absolute;
+  top: 50%; /* Vertically center at the top of the image */
+  left: 70%; /* Horizontally center in the image */
+  transform: translate(-50%, -50%); /* Center both horizontally and vertically */
+
+  text-align: right;
+}
+.text-small {
+  color: #f2f2f2;
+  font-size: 23px;
+  padding-top: 20px;
+  position: absolute;
+  top: 60%; /* Vertically center at the top of the image */
+  left: 71%; /* Horizontally center in the image */
+  transform: translate(-50%, -50%); /* Center both horizontally and vertically */
+  text-align: right;
+}
+
+
+.mySlides img {
+  width: 1400px; /* Set the width */
+  height: 500px; /* Set the height */
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+:root {
+    --red: hsl(0, 78%, 62%);
+    --cyan: hsl(180, 62%, 55%);
+    --orange: hsl(34, 97%, 64%);
+    --blue: hsl(212, 86%, 64%);
+    --varyDarkBlue: hsl(234, 12%, 34%);
+    --grayishBlue: hsl(229, 6%, 66%);
+    --veryLightGray: hsl(0, 0%, 98%);
+    --weight1: 200;
+    --weight2: 400;
+    --weight3: 600;
+}
+
+.attribution {
+    font-size: 11px; text-align: center;
+}
+.attribution a {
+    color: hsl(228, 45%, 44%);
+}
+
+h1:first-of-type {
+    font-weight: var(--weight1);
+    color: var(--varyDarkBlue);
+
+}
+
+h1:last-of-type {
+    color: var(--varyDarkBlue);
+}
+
+@media (max-width: 400px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+}
+
+.header {
+    text-align: center;
+    line-height: 0.8;
+    margin-bottom: 50px;
+    margin-top: 100px;
+}
+
+.header p {
+    margin: 0 auto;
+    line-height: 2;
+    color: var(--grayishBlue);
+}
+
+
+.box p {
+    color: var(--grayishBlue);
+}
+.services-container .box {
+    width: 400px;
+}
+
+.box {
+    border-radius: 5px;
+    box-shadow: 0px 30px 40px -20px var(--grayishBlue);
+    padding: 30px;
+    margin: 20px;
+    height: 260px;
+
+
+}
+
+img {
+    float: right;
+}
+
+@media (max-width: 450px) {
+    .box {
+        height: 200px;
+    }
+}
+
+@media (max-width: 950px) and (min-width: 450px) {
+    .box {
+        text-align: center;
+        height: 180px;
+    }
+}
+
+.cyan {
+    border-top: 3px solid var(--cyan);
+}
+.blue {
+    border-top: 3px solid var(--blue);
+}
+.red {
+    border-top: 3px solid var(--orange);
+}
+
+h2 {
+    color: var(--varyDarkBlue);
+    font-weight: var(--weight3);
+}
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+  padding-top: 120px;
+  height: 300px; /* Should be removed. Only for demonstration */
+  background-color: black;
+  opacity: 70%;
+  color: white;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.row {
+  background-image: url('https://www.geteducated.com/wp-content/uploads/2022/06/iStock-1396003045-1140x400.jpg');
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+.column button {
+  background-color: rgb(253, 199, 21);
+  width: 300px;
+  height: 50px;
+}
+.column h2 {
+  color: white;
+  font-size: 40px;
+}
+
+@media (min-width: 950px) {
+    .row1-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+    }
+
+    .row2-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .box-down {
+        position: relative;
+
+    }
+    .box {
+        width: 20%;
+
+    }
+    .header p {
+        width: 30%;
+    }
+
+}
+
+ /* Define a container for the services section */
+        .services-container {
+            background-color: #f4f4f4; /* Background color */
+            padding-top: 100px; /* Add spacing around the content */
+            text-align: center; /* Center align the content */
+        }
+
+        /* Style the heading */
+        .services-heading {
+            font-size: 36px;
+            color: #333; /* Text color */
+            margin-bottom: 20px; /* Add spacing below the heading */
+        }
+        .box img{
+            padding-top: 20px;
+        }
+
+
+</style>
+
+<header class=" relative shadow-lg px-3 py-2">
+  <nav class="flex justify-between">
+    <div class="w-[130px] md:w-[200px] flex items-center">
+        <h2 class="gradient">GovtLegalAssistant</h2>
+
+    </div>
+    <div class="flex items-center gap-3" style="padding-right: 80px">
+      <div class="navLinks duration-500 absolute md:static md:w-auto w-full md:h-auto h-[85vh] bg-white flex md:items-center gap-[1.5vw] top-[100%] left-[100%] px-5 md:py-0 py-5 ">
+        <ul class="flex md:flex-row flex-col md:items-center md:gap-[2vw] gap-8">
+          <li class="relative max-w-fit pr-3 md:pr-0 py-1 after:bg-gradient-to-r from-[#2b68e0] to-[#e710ea]  after:absolute after:h-1 after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-300"><a href="#">Home</a></li>
+          {%if request.user.is_authenticated%}
+          <li class="relative max-w-fit pr-3 md:pr-0 py-1 after:bg-gradient-to-r from-[#2b68e0] to-[#e710ea]  after:absolute after:h-1 after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-300"><a href="/client_appointment">Appointments</a></li>
+
+        </ul>
+      </div>
+      
+      <a href="/logout"><button class="custom-button">Log Out</button></a>
+      {% else %}
+        <div class="dropdown-overlay">
+   <div class="dropdown">
+    <button class="custom-button">Login</button>
+    <div class="dropdown-content">
+        <a href="/user_login">As a Client</a>
+        <a href="/user_login">As a Lawyer</a>
+
+    </div>
+    
+    </div>
+            </div>
+        <div class="dropdown-overlay">
+           <div class="dropdown">
+    <button class="custom-button">Sign up</button>
+    <div class="dropdown-content">
+        <a href="/client_registration">As a Client</a>
+        <a href="/lawyer_registration">As a Lawyer</a>
+
+    </div>
+    </div>
+    {% endif %}
+        </div>
+</div>
+  </nav>
+</header>
+    <!-- Slideshow container -->
+    <div class="slideshow-container">
+      <div class="mySlides fade">
+        <!-- <div class="numbertext">2 / 3</div> -->
+        <img src="../static/Your one-stop destination for online legal document creation (2).png" style="width:100%">
+        <!-- <div class="text">Legal Assistant</div> -->
+      </div>
+
+      <!-- Full-width images with number and caption text -->
+      <!-- <div class="mySlides fade">
+        <img src="../static/Blue & White Futuristic Gaming Youtube Thumbnail (1).png" style="width:100%">
+      </div> -->
+
+      <div class="mySlides fade">
+        <!-- <div class="numbertext">3 / 3</div> -->
+        <img src="../static/modiji.png" style="width:100%">
+        <!-- <div class="text">Caption Three</div> -->
+      </div>
+
+      <!-- Next and previous buttons -->
+      <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+      <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    </div>
+<br>
+
+<!-- The dots/circles -->
+
+    <div class="services-container">
+    <h1 class="services-heading">Our Services</h1>
+    <div class="row1-container">
+        <div class="box box-down cyan">
+            <h2>Business & Contract</h2>
+            <a href="/nda" class="custom-link">
+                <p style="padding-top: 20px">Non-Disclosure Agreement</p>
+            </a>
+            <p>Business Contract</p>
+            <img style="width: 70px" src="../static/investment.png" alt="">
+        </div>
+
+        <div class="box red">
+            <h2>Family and personal</h2>
+            <a href="your-link-here.html" class="custom-link">
+                <p style="padding-top: 20px">Divorce Settlement Agreement</p>
+            </a>
+            <p>Living Will</p>
+            <img style="width: 70px" src="../static/happy.png" alt="">
+        </div>
+
+        <div class="box box-down blue">
+            <h2>Real Estate</h2>
+            <a href="your-link-here.html" class="custom-link">
+                <p style="padding-top: 20px">Intent to Purchase Real Estate</p>
+            </a>
+            <p>Eviction Notice</p>
+            <img style="width: 70px" src="../static/house_602175.png" alt="">
+        </div>
+    </div>
+</div>
+
+<div class="services-container">
+  <h1 class="services-heading">Ask a Lawyer</h1>
+  <div>
+    <center><p>Need legal advice? Our 'Ask for a Lawyer' feature connects you with experienced attorneys to address your legal questions and concerns promptly and confidentially.</p></center>
+    <br>
+    <a href="/client_dashboard"><button style="background-color: rgb(253, 199, 21);width: 300px;height: 50px;">Ask a Lawyer</button></a>
+  </div>
+</div>
+
+<div class="services-container">
+  <h1 class="services-heading">Legal Chat Assistance</h1>
+  <div class="row">
+    <div class="column">
+      <h2>Legal Chat Assistance</h2>
+      <p>Welcome to our Legal Chatbot, your go-to resource for quick and accurate legal information and advice. </p>
+    </div>
+    <div class="column">
+      <a href="/chatbot"><button>Chat Assistance</button></a>
+      <br>
+      <br>
+      <a href="/documentChatbot"><button>Query Your Document</button></a>
+    </div>
+  </div>
+</div>
+    <footer class="relative bg-gray-200 pt-8 pb-6">
+  <div class="container mx-auto px-4">
+    <div class="flex flex-wrap text-left lg:text-left">
+      <div class="w-full lg:w-6/12 px-4">
+        <h4 class="text-3xl fonat-semibold text-blueGray-700">Let's keep in touch!</h4>
+        <h5 class="text-lg mt-0 mb-2 text-blueGray-600">
+          Find us on any of these platforms, we respond 1-2 days.
+        </h5>
+        <div class="mt-6 lg:mb-0 mb-6">
+          <button class="bg-white text-lightBlue-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button">
+            <i class="fab fa-twitter"></i></button><button class="bg-white text-lightBlue-600 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button">
+            <i class="fab fa-facebook-square"></i></button><button class="bg-white text-pink-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button">
+            <i class="fab fa-dribbble"></i></button><button class="bg-white text-blueGray-800 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button">
+            <i class="fab fa-github"></i>
+          </button>
+        </div>
+      </div>
+      <div class="w-full lg:w-6/12 px-4">
+        <div class="flex flex-wrap items-top mb-6">
+          <div class="w-full lg:w-4/12 px-4 ml-auto">
+            <span class="block uppercase text-blueGray-500 text-sm font-semibold mb-2">Useful Links</span>
+            <ul class="list-unstyled">
+              <li>
+                <a class="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm" href="">About Us</a>
+              </li>
+              <li>
+                <a class="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm" href="">Blog</a>
+              </li>
+              <li>
+                <a class="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm" href="">Github</a>
+              </li>
+              <li>
+                <a class="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm" href="">Free Products</a>
+              </li>
+            </ul>
+          </div>
+          <div class="w-full lg:w-4/12 px-4">
+            <span class="block uppercase text-blueGray-500 text-sm font-semibold mb-2">Other Resources</span>
+            <ul class="list-unstyled">
+              <li>
+                <a class="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm" href="">MIT License</a>
+              </li>
+              <li>
+                <a class="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm" href="">Terms &amp; Conditions</a>
+              </li>
+              <li>
+                <a class="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm" href="">Privacy Policy</a>
+              </li>
+              <li>
+                <a class="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm" href="">Contact Us</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr class="my-6 border-blueGray-300">
+    <div class="flex flex-wrap items-center md:justify-between justify-center">
+
+    </div>
+  </div>
+</footer>
+
+    </body>
+<script>
+    function onMenuToggle(e) {
+  const navlinks = document.querySelector(".navLinks");
+  e.name = e.name === "menu" ? "close" : "menu";
+  navlinks.classList.toggle("left-[0%]");
+}
+    let slideIndex = 1;
+showSlides(slideIndex);
+
+// Next/previous controls
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+// Thumbnail image controls
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  let i;
+  let slides = document.getElementsByClassName("mySlides");
+  let dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " active";
+}
+</script>
+</html>

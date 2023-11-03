@@ -1,0 +1,115 @@
+{% extends 'lawyer.html' %}
+
+{% block content %}
+</head>
+<style>
+    /* Reset some default styles */
+body, h1, h2, p {
+    margin: 0;
+    padding: 0;
+}
+
+/* Global styles */
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+
+
+.user-details h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+
+.contact-info h2, .upi-id h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.contact-info p, .upi-id p {
+    margin: 5px 0;
+}
+
+</style>
+<body>
+    <div class="container">
+    <div class="main-body">
+        <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+                <div class="card" style="height: 350px">
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center" style="padding-top: 40px">
+                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
+                            <div class="mt-3">
+                                <h4 style="font-weight: bold; font-size: 22px">{{lawyer.name}}</h4>
+                                <p class="text-secondary mb-1">{{lawyer.lawyertype}}</p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Full Name</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                {{lawyer.name}}
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Email</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                {{lawyer.email}}
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Phone</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                {{lawyer.phno}}
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">State</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                {{lawyer.enrollmentstate}}
+                            </div>
+                        </div>
+                         <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Pincode</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                {{lawyer.Pincode}}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+{% endblock content %}
